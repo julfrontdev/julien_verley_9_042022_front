@@ -14,22 +14,22 @@ class Api { // jsonOrThrowIfError
     return jsonOrThrowIfError(await fetch(`${this.baseUrl}${url}`, {headers, method: 'GET'})) // fetch
   }
   async post({url, data, headers}) {
-    return jsonOrThrowIfError(await fetch(`${this.baseUrl}${url}`, {headers, method: 'POST', body: data}))
+    return jsonOrThrowIfError(await fetch(`${this.baseUrl}${url}`, {headers, method: 'POST', body: data})) // post : pour créer 
   }
   async delete({url, headers}) {
     return jsonOrThrowIfError(await fetch(`${this.baseUrl}${url}`, {headers, method: 'DELETE'}))
   }
   async patch({url, data, headers}) {
-    return jsonOrThrowIfError(await fetch(`${this.baseUrl}${url}`, {headers, method: 'PATCH', body: data}))
+    return jsonOrThrowIfError(await fetch(`${this.baseUrl}${url}`, {headers, method: 'PATCH', body: data})) // patch : pour màj modifier corriger
   }
 }
 
 // getHeaders ? //////////////////////////////////
-const getHeaders = (headers) => { // getHeaders ?
+const getHeaders = (headers) => { // getHeaders ? cryptage etc. 
   const h = { }
   if (!headers.noContentType) h['Content-Type'] = 'application/json'
   const jwt = localStorage.getItem('jwt')
-  if (jwt && !headers.noAuthorization) h['Authorization'] = `Bearer ${jwt}`
+  if (jwt && !headers.noAuthorization) h['Authorization'] = `Bearer ${jwt}` // récupération du token crypté
   return {...h, ...headers}
 }
 
@@ -40,7 +40,7 @@ class ApiEntity { // constructor initialise un objet (permet de construire un ob
     this.api = api; // this.api prend la valeur de api (passé en paramètre)
   }
   // ApiEntity.select
-  async select({selector, headers = {}}) {
+  async select({selector, headers = {}}) { // headers : partie invisible de la requête (informations cryptées, network, géolocalisation etc.), body : parties visibles du site 
     return await (this.api.get({url: `/${this.key}/${selector}`, headers: getHeaders(headers)}))
     // ? Que sont key ? selector ? headers ?
   }
@@ -70,7 +70,7 @@ class Store {
     // Cf. back : L'api est accessible sur le port `5678` en local, c'est à dire `http://localhost:5678`
   }
 
-  user = uid => (new ApiEntity({key: 'users', api: this.api})).select({selector: uid})
+  user = uid => (new ApiEntity({key: 'users', api: this.api})).select({selector: uid}) // uid = unique id 
   users = () => new ApiEntity({key: 'users', api: this.api})
   login = (data) => this.api.post({url: '/auth/login', data, headers: getHeaders({noAuthorization: true})})
 

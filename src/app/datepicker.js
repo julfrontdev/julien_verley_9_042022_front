@@ -11,8 +11,9 @@ const months = ["January", "February", "March", "April", "May", "June", "July", 
 const months_short = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 
-// PROTOTYPES
-Date.prototype.getWeekNumber = function () {
+// PROTOTYPES 
+// __proto__ dans chaque objet (cf. FS 5/6 POO 38') : montre toutes les méthodes que l'on peut appeler à notre objet 
+Date.prototype.getWeekNumber = function () { // POO, attention aux f° fléchées
     var d = new Date(Date.UTC(this.getFullYear(), this.getMonth(), this.getDate()));
     var dayNum = d.getUTCDay() || 7;
     d.setUTCDate(d.getUTCDate() + 4 - dayNum);
@@ -21,15 +22,15 @@ Date.prototype.getWeekNumber = function () {
 };
 
 // DATEPICKER
+// DatePicker, pour les nouvelles notes de frais
 class Datepicker {
+    // 1/ constructor 
     constructor(host, s) {
         const t = this;
         t.host = host;
         t.frame = document.createElement("div");
         t.frame.id = "datepicker-frame";
         t.frame.className = "noselect";
-        
-        
         
         // Run config if settings present
         if (s) t.config(s); 
@@ -50,7 +51,7 @@ class Datepicker {
             ) show(false);
         });
         
-        // Load
+        // a/ Load
         t.load = function (n) {
             while (t.frame.firstChild) t.frame.removeChild(t.frame.firstChild);
             
@@ -216,6 +217,7 @@ class Datepicker {
             }
         };
         
+        // b/ show
         const show = function (bool) {
             if (bool) {
                 const rect = t.host.getBoundingClientRect();
@@ -229,7 +231,8 @@ class Datepicker {
             else if (!bool) document.getElementById("datepicker-frame").remove();
         };
     }
-    
+
+    // 2/ config()
     config(s) {
         this.firstdate = s.firstdate || this.firstdate;
         this.lastdate = s.lastdate || this.lastdate;
@@ -257,10 +260,12 @@ class Datepicker {
         this.host.value = this.format(this.date);
     }
     
+    // 3/ getDate()
     getDate() {
         return this.date;
     }
     
+    // 4/ setDate()
     setDate(date) {
         if (date < this.firstdate || date > this.lastdate) return;
         if (!this.disableddays(date)) {

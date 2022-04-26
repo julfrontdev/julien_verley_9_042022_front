@@ -22,7 +22,7 @@ export const modal = () => (`
   `)
 
 export default (bill) => {
-
+  // Envoyer une nouvelle note de frais ?
   return (`
     <div class="container dashboard-form" data-testid="dashboard-form">
       <div class="row">

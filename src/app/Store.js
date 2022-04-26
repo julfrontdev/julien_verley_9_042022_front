@@ -1,15 +1,17 @@
+// Store 
 
-const jsonOrThrowIfError = async (response) => {
-  if(!response.ok) throw new Error((await response.json()).message)
+const jsonOrThrowIfError = async (response) => { // async (transforme (le return de) la fonction en promesse)
+  if(!response.ok) throw new Error((await response.json()).message) // await (permet d'attendre le résultat de la promesse)
   return response.json()
 }
 
-class Api {
+// Api
+class Api { // jsonOrThrowIfError
   constructor({baseUrl}) {
     this.baseUrl = baseUrl;
   }
-  async get({url, headers}) {
-    return jsonOrThrowIfError(await fetch(`${this.baseUrl}${url}`, {headers, method: 'GET'}))
+  async get({url, headers}) { // url ? headers ?
+    return jsonOrThrowIfError(await fetch(`${this.baseUrl}${url}`, {headers, method: 'GET'})) // fetch
   }
   async post({url, data, headers}) {
     return jsonOrThrowIfError(await fetch(`${this.baseUrl}${url}`, {headers, method: 'POST', body: data}))
@@ -22,7 +24,8 @@ class Api {
   }
 }
 
-const getHeaders = (headers) => {
+// getHeaders ? //////////////////////////////////
+const getHeaders = (headers) => { // getHeaders ?
   const h = { }
   if (!headers.noContentType) h['Content-Type'] = 'application/json'
   const jwt = localStorage.getItem('jwt')
@@ -30,33 +33,41 @@ const getHeaders = (headers) => {
   return {...h, ...headers}
 }
 
-class ApiEntity {
-  constructor({key, api}) {
-    this.key = key;
-    this.api = api;
+// ApiEntity
+class ApiEntity { // constructor initialise un objet (permet de construire un objet)
+  constructor({key, api}) { // ? objet {key, api} ?
+    this.key = key; // this.key prend la valeur de key (passé en paramètre)
+    this.api = api; // this.api prend la valeur de api (passé en paramètre)
   }
+  // ApiEntity.select
   async select({selector, headers = {}}) {
     return await (this.api.get({url: `/${this.key}/${selector}`, headers: getHeaders(headers)}))
+    // ? Que sont key ? selector ? headers ?
   }
+  // ApiEntity.list
   async list({headers = {}} = {}) {
     return await (this.api.get({url: `/${this.key}`, headers: getHeaders(headers)}))
   }
+  // ApiEntity.update
   async update({data, selector, headers = {}}) {
     return await (this.api.patch({url: `/${this.key}/${selector}`, headers: getHeaders(headers), data}))
+    // ? Que sont key ? selector ? headers ? data ?
   }
+  // ApiEntity.create
   async create({data, headers = {}}) {
     return await (this.api.post({url: `/${this.key}`, headers: getHeaders(headers), data}))
   }
+  // ApiEntity.delete
   async delete({selector, headers = {}}) {
     return await (this.api.delete({url: `/${this.key}/${selector}`, headers: getHeaders(headers)}))
   }
 }
 
-
-
+// Store
 class Store {
   constructor() {
-    this.api = new Api({baseUrl: 'http://localhost:5678'})
+    this.api = new Api({baseUrl: 'http://localhost:5678'}) 
+    // Cf. back : L'api est accessible sur le port `5678` en local, c'est à dire `http://localhost:5678`
   }
 
   user = uid => (new ApiEntity({key: 'users', api: this.api})).select({selector: uid})

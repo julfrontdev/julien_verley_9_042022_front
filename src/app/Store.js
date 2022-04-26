@@ -24,8 +24,8 @@ class Api { // jsonOrThrowIfError
   }
 }
 
-// getHeaders ? //////////////////////////////////
-const getHeaders = (headers) => { // getHeaders ? cryptage etc. 
+// getHeaders //////////////////////////////////
+const getHeaders = (headers) => { // getHeaders : cryptage etc. 
   const h = { }
   if (!headers.noContentType) h['Content-Type'] = 'application/json'
   const jwt = localStorage.getItem('jwt')

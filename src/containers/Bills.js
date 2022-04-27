@@ -40,28 +40,27 @@ export default class {
 
         // Sort : tri par date  
         // const bills = snapshot // avant 
-        const bills = snapshot.sort((a, b) => (new Date(a.date) - new Date(b.date))) // après 
-        // new permet de construire un objet 
-        .map(doc => {
-            try { // try...catch
-              return {
-                ...doc,
-                date: formatDate(doc.date), // #1 --> date: doc.date pour supprimer la f° formatDate ?
-                status: formatStatus(doc.status)
+        const bills = snapshot
+          .sort((a, b) => (new Date(a.date) - new Date(b.date))) // #bug1 ajouté // new pour construire un objet 
+          .map(doc => {
+              try { // try...catch
+                return {
+                  ...doc,
+                  date: formatDate(doc.date), // #1 --> date: doc.date pour supprimer la f° formatDate ?
+                  status: formatStatus(doc.status)
+                }
+              } catch(e) {
+                // if for some reason, corrupted data was introduced, we manage here failing formatDate function
+                // log the error and return unformatted date in that case
+                console.log(e,'for',doc)
+                return {
+                  ...doc,
+                  date: doc.date,
+                  status: formatStatus(doc.status)
+                }
               }
-            } catch(e) {
-              // if for some reason, corrupted data was introduced, we manage here failing formatDate function
-              // log the error and return unformatted date in that case
-              console.log(e,'for',doc)
-              return {
-                ...doc,
-                date: doc.date,
-                status: formatStatus(doc.status)
-              }
-            }
           })
-          console.log('length', bills.length)
-        //console.log(bills);
+        console.log('length', bills.length)
         return bills
       })
     }

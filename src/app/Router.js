@@ -34,7 +34,7 @@ export default () => {
       const divIcon2 = document.getElementById('layout-icon2')
       divIcon1.classList.add('active-icon')
       divIcon2.classList.remove('active-icon')
-      const bills = new Bills({ document, onNavigate, store, localStorage  })
+      const bills = new Bills({ document, onNavigate, store, localStorage  }) // Antoine : nouvelle instance de la classe bills (celle par défaut), pour appeler une des f° proposée dans la classe (Bills.js (default))
       bills.getBills().then(data => { // getBills() : cf. containers Bills.js
         rootDiv.innerHTML = BillsUI({ data })
         const divIcon1 = document.getElementById('layout-icon1')

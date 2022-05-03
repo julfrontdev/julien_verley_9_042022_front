@@ -23,13 +23,13 @@ const row = (bill) => {
 
 const rows = (data) => {
   return (data && data.length) ? data
-    .sort((a, b) => (new Date(a.date) < new Date(b.date) ? 1 : -1)) // #bug1 ajouté
+    .sort((a, b) => (new Date(a.date) < new Date(b.date) ? 1 : -1)) // Bug #1 ajouté
     .map(bill => row(bill)).join("") : ""
 }
 
 export default ({ data: bills, loading, error }) => { // fonction BillUI()
   
-  // Modal justificatifs
+  // Modal justificatifs, côté employé
   const modal = () => (`
     <div class="modal fade" id="modaleFile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -53,7 +53,7 @@ export default ({ data: bills, loading, error }) => { // fonction BillUI()
     return ErrorPage(error)
   }
   
-  // // Mes notes de frais : listes // Bug 1 bills 
+  // // Mes notes de frais : listes // Bug #1 bills, côté employé
   return (`
     <div class='layout'>
       ${VerticalLayout(120)}

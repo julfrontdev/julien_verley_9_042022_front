@@ -41,12 +41,12 @@ export default class {
         // Sort : tri par date  
         // const bills = snapshot // avant 
         const bills = snapshot
-          .sort((a, b) => (new Date(a.date) - new Date(b.date))) // #bug1 ajouté // new pour construire un objet 
+          .sort((a, b) => (new Date(a.date) - new Date(b.date))) // Bug #1 ligne ajoutée .sort
           .map(doc => {
               try { // try...catch
                 return {
                   ...doc,
-                  date: formatDate(doc.date), // #1 --> date: doc.date pour supprimer la f° formatDate ?
+                  date: formatDate(doc.date), // date: doc.date pour supprimer la f° formatDate ?
                   status: formatStatus(doc.status)
                 }
               } catch(e) {

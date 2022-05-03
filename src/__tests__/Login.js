@@ -110,7 +110,6 @@ describe("Given that I am a user on login page", () => {
         })
       );
     });
-
     test("It should renders Bills page", () => {
       expect(screen.getAllByText("Mes notes de frais")).toBeTruthy();
     });
@@ -210,7 +209,10 @@ describe("Given that I am a user on login page", () => {
       login.login = jest.fn().mockResolvedValue({}); // mock
       form.addEventListener("submit", handleSubmit);
       fireEvent.submit(form);
-      expect(handleSubmit).toHaveBeenCalled();
+      // Test : expect(jest.fn()).toHaveBeenCalled()
+      // Test : Expected number of calls: >= 1
+      // Test : Received number of calls:    0
+      expect(handleSubmit).toHaveBeenCalled(); 
       expect(window.localStorage.setItem).toHaveBeenCalled();
       expect(window.localStorage.setItem).toHaveBeenCalledWith(
         "user",
@@ -223,6 +225,8 @@ describe("Given that I am a user on login page", () => {
       );
     });
 
+    // Test : expect(received).toBeTruthy()
+    // Test : Received: null
     test("It should renders HR dashboard page", () => {
       expect(screen.queryByText("Validations")).toBeTruthy();
     });

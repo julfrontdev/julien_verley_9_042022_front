@@ -27,6 +27,7 @@ export const filteredBills = (data, status) => {
     }) : []
 }
 
+// Cards (notes de frais en attente, validé ou refusé), côté admin
 export const card = (bill) => {
   const firstAndLastNames = bill.email.split('@')[0]
   const firstName = firstAndLastNames.includes('.') ?
@@ -78,6 +79,7 @@ export default class {
     new Logout({ localStorage, onNavigate })
   }
 
+  // Côté employé
   handleClickIconEye = () => {
     const billUrl = $('#icon-eye-d').attr("data-bill-url")
     const imgWidth = Math.floor($('#modaleFileAdmin1').width() * 0.8)
@@ -85,6 +87,7 @@ export default class {
     if (typeof $('#modaleFileAdmin1').modal === 'function') $('#modaleFileAdmin1').modal('show')
   }
 
+  // Côté admin
   handleEditTicket(e, bill, bills) {
     if (this.counter === undefined || this.id !== bill.id) this.counter = 0
     if (this.id === undefined || this.id !== bill.id) this.id = bill.id
@@ -105,11 +108,12 @@ export default class {
       $('.vertical-navbar').css({ height: '120vh' })
       this.counter ++
     }
-    $('#icon-eye-d').click(this.handleClickIconEye) //
-    $('#btn-accept-bill').click((e) => this.handleAcceptSubmit(e, bill)) // 
-    $('#btn-refuse-bill').click((e) => this.handleRefuseSubmit(e, bill)) // 
+    $('#icon-eye-d').click(this.handleClickIconEye) // JQuery
+    $('#btn-accept-bill').click((e) => this.handleAcceptSubmit(e, bill)) // JQuery
+    $('#btn-refuse-bill').click((e) => this.handleRefuseSubmit(e, bill)) // JQuery
   }
 
+  // Note de frais acceptée
   handleAcceptSubmit = (e, bill) => {
     const newBill = {
       ...bill,
@@ -119,7 +123,7 @@ export default class {
     this.updateBill(newBill)
     this.onNavigate(ROUTES_PATH['Dashboard'])
   }
-
+  // Note de frais refusée
   handleRefuseSubmit = (e, bill) => {
     const newBill = {
       ...bill,
@@ -130,6 +134,7 @@ export default class {
     this.onNavigate(ROUTES_PATH['Dashboard'])
   }
 
+  // Notes de frais, montrer les tickets cards En attente, Validé, Refusé // Bug #4 
   handleShowTickets(e, bills, index) {
     if (this.counter === undefined || this.index !== index) this.counter = 0
     if (this.index === undefined || this.index !== index) this.index = index
@@ -146,7 +151,13 @@ export default class {
     }
 
     bills.forEach(bill => {
-      $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
+      //$(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills)) // Bug #4 avant 
+      // Add Event listeners only if this element have no data-listener // Bug #4 Après 
+      if(!$(`#open-bill${bill.id}`).data('listener')) { // à revoir 
+        $(`#open-bill${bill.id}`).data('listener', true) // à revoir 
+        //$(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
+        $(`#open-bill${bill.id}`).on('click', (e) => this.handleEditTicket(e, bill, bills))
+      }      
     })
 
     return bills

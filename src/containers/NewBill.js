@@ -50,8 +50,6 @@ export default class NewBill {
       alert("Le fichier doit être de type .JPG, .JPEG ou .PNG")
       e.target.value = ""
     }
-
- 
   }
 
   handleSubmit = e => {

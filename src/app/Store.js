@@ -67,7 +67,7 @@ class ApiEntity { // constructor initialise un objet (permet de construire un ob
 class Store {
   constructor() {
     this.api = new Api({baseUrl: 'http://localhost:5678'}) 
-    // Cf. back : L'api est accessible sur le port `5678` en local, c'est à dire `http://localhost:5678`
+    // Cf. back : L'API est accessible sur le port `5678` en local, c'est à dire `http://localhost:5678`
   }
 
   user = uid => (new ApiEntity({key: 'users', api: this.api})).select({selector: uid}) // uid = unique id 

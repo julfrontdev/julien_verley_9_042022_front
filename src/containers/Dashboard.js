@@ -134,7 +134,7 @@ export default class {
     this.onNavigate(ROUTES_PATH['Dashboard'])
   }
 
-  // Notes de frais, montrer les tickets cards En attente, Validé, Refusé // Bug #4 
+  // Bug #4 
   handleShowTickets(e, bills, index) {
     if (this.counter === undefined || this.index !== index) this.counter = 0
     if (this.index === undefined || this.index !== index) this.index = index
@@ -149,19 +149,14 @@ export default class {
         .html("")
       this.counter ++
     }
-
     bills.forEach(bill => {
-      //$(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills)) // Bug #4 avant 
-      // Add Event listeners only if this element have no data-listener // Bug #4 Après 
-      if(!$(`#open-bill${bill.id}`).data('listener')) { // à revoir 
-        $(`#open-bill${bill.id}`).data('listener', true) // à revoir 
-        //$(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
+      // Add Event listeners only if this element have no data-listener
+      if(!$(`#open-bill${bill.id}`).data('listener')) { // added 
+        $(`#open-bill${bill.id}`).data('listener', true) // added 
         $(`#open-bill${bill.id}`).on('click', (e) => this.handleEditTicket(e, bill, bills))
       }      
     })
-
     return bills
-
   }
 
   getBillsAllUsers = () => {

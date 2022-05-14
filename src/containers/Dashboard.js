@@ -27,7 +27,7 @@ export const filteredBills = (data, status) => {
     }) : []
 }
 
-// Cards (notes de frais en attente, validé ou refusé), côté admin
+// Admin / Cards ("notes de frais" "en attente", "validé" or "refusé")
 export const card = (bill) => {
   const firstAndLastNames = bill.email.split('@')[0]
   const firstName = firstAndLastNames.includes('.') ?
@@ -73,13 +73,13 @@ export default class {
     this.document = document
     this.onNavigate = onNavigate
     this.store = store
-    $('#arrow-icon1').click((e) => this.handleShowTickets(e, bills, 1)) //
-    $('#arrow-icon2').click((e) => this.handleShowTickets(e, bills, 2)) // 
-    $('#arrow-icon3').click((e) => this.handleShowTickets(e, bills, 3)) // 
+    $('#arrow-icon1').click((e) => this.handleShowTickets(e, bills, 1)) 
+    $('#arrow-icon2').click((e) => this.handleShowTickets(e, bills, 2))  
+    $('#arrow-icon3').click((e) => this.handleShowTickets(e, bills, 3)) 
     new Logout({ localStorage, onNavigate })
   }
 
-  // Côté employé
+  // Employee
   handleClickIconEye = () => {
     const billUrl = $('#icon-eye-d').attr("data-bill-url")
     const imgWidth = Math.floor($('#modaleFileAdmin1').width() * 0.8)
@@ -87,7 +87,7 @@ export default class {
     if (typeof $('#modaleFileAdmin1').modal === 'function') $('#modaleFileAdmin1').modal('show')
   }
 
-  // Côté admin
+  // Admin
   handleEditTicket(e, bill, bills) {
     if (this.counter === undefined || this.id !== bill.id) this.counter = 0
     if (this.id === undefined || this.id !== bill.id) this.id = bill.id
@@ -108,12 +108,12 @@ export default class {
       $('.vertical-navbar').css({ height: '120vh' })
       this.counter ++
     }
-    $('#icon-eye-d').click(this.handleClickIconEye) // JQuery
-    $('#btn-accept-bill').click((e) => this.handleAcceptSubmit(e, bill)) // JQuery
-    $('#btn-refuse-bill').click((e) => this.handleRefuseSubmit(e, bill)) // JQuery
+    $('#icon-eye-d').click(this.handleClickIconEye) 
+    $('#btn-accept-bill').click((e) => this.handleAcceptSubmit(e, bill)) 
+    $('#btn-refuse-bill').click((e) => this.handleRefuseSubmit(e, bill)) 
   }
 
-  // Note de frais acceptée
+  // "Note de frais" accepted
   handleAcceptSubmit = (e, bill) => {
     const newBill = {
       ...bill,
@@ -123,7 +123,7 @@ export default class {
     this.updateBill(newBill)
     this.onNavigate(ROUTES_PATH['Dashboard'])
   }
-  // Note de frais refusée
+  // "Note de frais" refused
   handleRefuseSubmit = (e, bill) => {
     const newBill = {
       ...bill,

@@ -7,8 +7,7 @@ export const formatDate = (dateStr) => { // #1
   const da = new Intl.DateTimeFormat('fr', { day: '2-digit' }).format(date)
   const month = mo.charAt(0).toUpperCase() + mo.slice(1)
   
-  return `${parseInt(da)} ${month.substr(0,3)}. ${ye.toString().substr(2,4)}` // non modifié
-  //return `${parseInt(da)} ${month.substring(0,3)}. ${ye.toString().substring(2,4)}` // modifié
+  return `${parseInt(da)} ${month.substr(0,3)}. ${ye.toString().substr(2,4)}` 
 }
  
 export const formatStatus = (status) => {

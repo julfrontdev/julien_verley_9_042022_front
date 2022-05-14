@@ -1,48 +1,45 @@
 // Store 
 
-const jsonOrThrowIfError = async (response) => { // async (transforme (le return de) la fonction en promesse)
-  if(!response.ok) throw new Error((await response.json()).message) // await (permet d'attendre le résultat de la promesse)
+const jsonOrThrowIfError = async (response) => { 
+  if(!response.ok) throw new Error((await response.json()).message) 
   return response.json()
 }
 
-// Api
+// API
 class Api { // jsonOrThrowIfError
   constructor({baseUrl}) {
     this.baseUrl = baseUrl;
   }
-  async get({url, headers}) { // url ? headers ?
-    return jsonOrThrowIfError(await fetch(`${this.baseUrl}${url}`, {headers, method: 'GET'})) // fetch
+  async get({url, headers}) { 
+    return jsonOrThrowIfError(await fetch(`${this.baseUrl}${url}`, {headers, method: 'GET'})) 
   }
   async post({url, data, headers}) {
-    return jsonOrThrowIfError(await fetch(`${this.baseUrl}${url}`, {headers, method: 'POST', body: data})) // post : pour créer 
+    return jsonOrThrowIfError(await fetch(`${this.baseUrl}${url}`, {headers, method: 'POST', body: data})) 
   }
   async delete({url, headers}) {
     return jsonOrThrowIfError(await fetch(`${this.baseUrl}${url}`, {headers, method: 'DELETE'}))
   }
   async patch({url, data, headers}) {
-    return jsonOrThrowIfError(await fetch(`${this.baseUrl}${url}`, {headers, method: 'PATCH', body: data})) // patch : pour màj modifier corriger
+    return jsonOrThrowIfError(await fetch(`${this.baseUrl}${url}`, {headers, method: 'PATCH', body: data}))
   }
 }
 
-// getHeaders //////////////////////////////////
-const getHeaders = (headers) => { // getHeaders : cryptage etc. 
+const getHeaders = (headers) => { // Encryption
   const h = { }
   if (!headers.noContentType) h['Content-Type'] = 'application/json'
   const jwt = localStorage.getItem('jwt')
-  if (jwt && !headers.noAuthorization) h['Authorization'] = `Bearer ${jwt}` // récupération du token crypté
+  if (jwt && !headers.noAuthorization) h['Authorization'] = `Bearer ${jwt}` 
   return {...h, ...headers}
 }
 
-// ApiEntity
-class ApiEntity { // constructor initialise un objet (permet de construire un objet)
-  constructor({key, api}) { // ? objet {key, api} ?
-    this.key = key; // this.key prend la valeur de key (passé en paramètre)
-    this.api = api; // this.api prend la valeur de api (passé en paramètre)
+class ApiEntity { 
+  constructor({key, api}) { 
+    this.key = key; 
+    this.api = api; 
   }
   // ApiEntity.select
-  async select({selector, headers = {}}) { // headers : partie invisible de la requête (informations cryptées, network, géolocalisation etc.), body : parties visibles du site 
+  async select({selector, headers = {}}) { // headers for invisble parts of the request (≠ body visible)
     return await (this.api.get({url: `/${this.key}/${selector}`, headers: getHeaders(headers)}))
-    // ? Que sont key ? selector ? headers ?
   }
   // ApiEntity.list
   async list({headers = {}} = {}) {
@@ -51,7 +48,6 @@ class ApiEntity { // constructor initialise un objet (permet de construire un ob
   // ApiEntity.update
   async update({data, selector, headers = {}}) {
     return await (this.api.patch({url: `/${this.key}/${selector}`, headers: getHeaders(headers), data}))
-    // ? Que sont key ? selector ? headers ? data ?
   }
   // ApiEntity.create
   async create({data, headers = {}}) {
@@ -66,8 +62,7 @@ class ApiEntity { // constructor initialise un objet (permet de construire un ob
 // Store
 class Store {
   constructor() {
-    this.api = new Api({baseUrl: 'http://localhost:5678'}) 
-    // Cf. back : L'API est accessible sur le port `5678` en local, c'est à dire `http://localhost:5678`
+    this.api = new Api({baseUrl: 'http://localhost:5678'}) // API accessible on port `5678` locally
   }
 
   user = uid => (new ApiEntity({key: 'users', api: this.api})).select({selector: uid}) // uid = unique id 

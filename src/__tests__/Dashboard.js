@@ -13,9 +13,9 @@ import mockStore from "../__mocks__/store"
 import { bills } from "../fixtures/bills"
 import router from "../app/Router"
 
-jest.mock("../app/store", () => mockStore) // mock remplace le app store.js
+jest.mock("../app/store", () => mockStore) // mock replaces store.js
 
-describe('Given I am connected as an Admin', () => { // Test unitaire = d'une fonction, dans plusieurs cas 
+describe('Given I am connected as an Admin', () => { 
   describe('When I am on Dashboard page, there are bills, and there is one pending', () => {
     test('Then, filteredBills by pending status should return 1 bill', () => {
       const filtered_bills = filteredBills(bills, "pending")
@@ -34,23 +34,23 @@ describe('Given I am connected as an Admin', () => { // Test unitaire = d'une fo
       expect(filtered_bills.length).toBe(2)
     })
   })
-  describe('When I am on Dashboard page but it is loading', () => { // Test d'intégration : on crée un faux dom
+  describe('When I am on Dashboard page but it is loading', () => { // Integration test: fake DOM
     test('Then, Loading page should be rendered', () => {
-      document.body.innerHTML = DashboardUI({ loading: true }) //
+      document.body.innerHTML = DashboardUI({ loading: true })
       expect(screen.getAllByText('Loading...')).toBeTruthy()
     })
   })
-  describe('When I am on Dashboard page but back-end send an error message', () => { // Test d'intégration : on crée un faux dom
+  describe('When I am on Dashboard page but back-end send an error message', () => {
     test('Then, Error page should be rendered', () => {
       document.body.innerHTML = DashboardUI({ error: 'some error message' }) // 
-      expect(screen.getAllByText('Erreur')).toBeTruthy() // screen.getAllByText : erreur dans le HTML ? 
+      expect(screen.getAllByText('Erreur')).toBeTruthy() 
     })
   })
 
   describe('When I am on Dashboard page and I click on arrow', () => {
     test('Then, tickets list should be unfolding, and cards should appear', async () => {
 
-      const onNavigate = (pathname) => { // modèle 
+      const onNavigate = (pathname) => { // model 
         document.body.innerHTML = ROUTES({ pathname })
       }
 
@@ -59,7 +59,7 @@ describe('Given I am connected as an Admin', () => { // Test unitaire = d'une fo
         type: 'Admin'
       }))
 
-      const dashboard = new Dashboard({ // modèle 
+      const dashboard = new Dashboard({ // model 
         document, onNavigate, store: null, bills:bills, localStorage: window.localStorage
       })
       document.body.innerHTML = DashboardUI({ data: { bills } })
@@ -240,8 +240,8 @@ describe('Given I am connected as Admin and I am on Dashboard page and I clicked
   })
 })
 
-// #5 Test d'intégration (modèle pour composant container/Bills)
-// test d'intégration GET
+
+// Integration test model with GET
 describe("Given I am a user connected as Admin", () => {
   describe("When I navigate to Dashboard", () => {
 
@@ -253,11 +253,11 @@ describe("Given I am a user connected as Admin", () => {
       router()
       window.onNavigate(ROUTES_PATH.Dashboard)
       await waitFor(() => screen.getByText("Validations"))
-      const contentPending  = await screen.getByText("En attente (1)") // d'origine, pas d'asynchrone 
-      //const contentPending  = await waitFor(() => screen.getByText("En attente (1)")) // asynchrone corrigé
+      const contentPending  = await screen.getByText("En attente (1)") // not asynchrone 
+      //const contentPending  = await waitFor(() => screen.getByText("En attente (1)")) // no need
       expect(contentPending).toBeTruthy()
-      const contentRefused  = await screen.getByText("Refusé (2)") // d'origine, pas d'asynchrone 
-      //const contentRefused  = await waitFor(() => screen.getByText("Refusé (2)")) // asynchrone corrigé 
+      const contentRefused  = await screen.getByText("Refusé (2)") // // not asynchrone
+      //const contentRefused  = await waitFor(() => screen.getByText("Refusé (2)")) // no need
       expect(contentRefused).toBeTruthy()
       expect(screen.getByTestId("big-billed-icon")).toBeTruthy()
     })

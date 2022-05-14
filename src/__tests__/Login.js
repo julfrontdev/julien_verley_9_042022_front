@@ -169,13 +169,13 @@ describe("Given that I am a user on login page", () => {
 
       const inputEmailUser = screen.getByTestId("admin-email-input");
       fireEvent.change(inputEmailUser, { target: { value: inputData.email } });
-      expect(inputEmailUser.value).toBe(inputData.email); // value
+      expect(inputEmailUser.value).toBe(inputData.email); 
 
       const inputPasswordUser = screen.getByTestId("admin-password-input");
       fireEvent.change(inputPasswordUser, {
         target: { value: inputData.password },
       });
-      expect(inputPasswordUser.value).toBe(inputData.password); // value
+      expect(inputPasswordUser.value).toBe(inputData.password); 
 
       const form = screen.getByTestId("form-admin");
 
@@ -195,7 +195,7 @@ describe("Given that I am a user on login page", () => {
 
       let PREVIOUS_LOCATION = "";
 
-      const store = jest.fn(); // = fonction simulée 
+      const store = jest.fn(); 
 
       const login = new Login({
         document,
@@ -205,8 +205,8 @@ describe("Given that I am a user on login page", () => {
         store,
       });
 
-      const handleSubmit = jest.fn(login.handleSubmitAdmin); // jest.fn() devrait être appelée
-      login.login = jest.fn().mockResolvedValue({}); // mock
+      const handleSubmit = jest.fn(login.handleSubmitAdmin); 
+      login.login = jest.fn().mockResolvedValue({}); 
       form.addEventListener("submit", handleSubmit);
       fireEvent.submit(form);
       // Test : expect(jest.fn()).toHaveBeenCalled()

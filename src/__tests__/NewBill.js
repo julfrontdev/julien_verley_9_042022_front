@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { fireEvent, screen, waitFor } from "@testing-library/dom" // modifié 
+import { fireEvent, screen, waitFor } from "@testing-library/dom" //
 import userEvent from '@testing-library/user-event'
 import mockStore from '../__mocks__/store.js' //
 import { localStorageMock } from '../__mocks__/localStorage.js' //
@@ -21,9 +21,8 @@ jest.mock('../app/store', () => mockStore)
 const onNavigate = (pathname) => {
   document.body.innerHTML = ROUTES({ pathname })
 }
-// Object.defineProperty(window, : donne de nouvelles valeurs à l'object window
-Object.defineProperty(window, 'LocalStorage', {value: localStorageMock}) // répétition 
-window.localStorage.setItem('user', JSON.stringify({type: 'Employee'})) // répétition 
+Object.defineProperty(window, 'LocalStorage', {value: localStorageMock})
+window.localStorage.setItem('user', JSON.stringify({type: 'Employee'}))
 
 // Tests #1
 describe('Given I am connected as an employee', () => {

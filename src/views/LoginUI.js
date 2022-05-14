@@ -1,4 +1,4 @@
-// Page d'accueil : login 
+// Login page 
 
 export default () => {
 

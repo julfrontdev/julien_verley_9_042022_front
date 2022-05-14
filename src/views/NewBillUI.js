@@ -1,4 +1,4 @@
-// Envoyer une nouvelle note de frais 
+// Send "Nouvelle note de frais"
 
 import VerticalLayout from './VerticalLayout.js'
 

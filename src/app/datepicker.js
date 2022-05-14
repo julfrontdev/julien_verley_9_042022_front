@@ -11,9 +11,8 @@ const months = ["January", "February", "March", "April", "May", "June", "July", 
 const months_short = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 
-// PROTOTYPES 
-// __proto__ dans chaque objet (cf. FS 5/6 POO 38') : montre toutes les méthodes que l'on peut appeler à notre objet 
-Date.prototype.getWeekNumber = function () { // POO, attention aux f° fléchées
+// Prototypes
+Date.prototype.getWeekNumber = function () { 
     var d = new Date(Date.UTC(this.getFullYear(), this.getMonth(), this.getDate()));
     var dayNum = d.getUTCDay() || 7;
     d.setUTCDate(d.getUTCDate() + 4 - dayNum);
@@ -21,8 +20,7 @@ Date.prototype.getWeekNumber = function () { // POO, attention aux f° fléchée
     return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
 };
 
-// DATEPICKER
-// DatePicker, pour les nouvelles notes de frais
+// DatePicker, for new "Notes de frais"
 class Datepicker {
     // 1/ constructor 
     constructor(host, s) {

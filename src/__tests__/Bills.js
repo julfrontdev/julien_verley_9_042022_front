@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { fireEvent, screen, waitFor } from "@testing-library/dom"; //
+import { fireEvent, screen, waitFor } from "@testing-library/dom";
 import BillsUI from "../views/BillsUI.js";
 import { bills } from "../fixtures/bills.js";
 import { ROUTES_PATH } from "../constants/routes.js";
@@ -11,7 +11,6 @@ import Bills from "../containers/Bills";
 import mockStore from "../__mocks__/store";
 import router from "../app/Router.js";
 import { ROUTES } from "../constants/routes";
-import BillsContainer from "../containers/Bills"; //
 import store from "../__mocks__/store.js";
 
 jest.mock("../app/store", () => mockStore);
